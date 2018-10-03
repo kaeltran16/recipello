@@ -63,3 +63,5 @@ typings/
 # Custom
 .idea
 dist
+src/server/node_modules
+src/server/src/config/keys_dev.js
