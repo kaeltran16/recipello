@@ -1,0 +1,14 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "google"
+  ],
+  "rules": {
+    "linebreak-style": "off",
+    "indent": [
+      "off"
+    ],
+    "no-tabs": "off",
+    "comma-dangle": "off"
+  }
+}
