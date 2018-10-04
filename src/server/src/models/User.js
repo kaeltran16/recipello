@@ -26,6 +26,5 @@ const UserSchema = new Schema({
 		}
 });
 
-const UserModel = mongoose.model('Recipe', UserSchema);
 
-export default UserModel;
+export const UserModel = mongoose.model('User', UserSchema);
