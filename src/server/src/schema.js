@@ -1,5 +1,6 @@
 const typeDefs = `
 	type Recipe {
+		id: ID
 		name: String!
 		category: String!
 		description: String!
@@ -10,6 +11,7 @@ const typeDefs = `
 	}
 	
 	type User {
+		id: ID
 		username: String!
 		password: String!
 		email: String!
@@ -19,6 +21,11 @@ const typeDefs = `
 	
 	type Query {
 		getAllRecipes: [Recipe]
+	}
+	
+	type Mutation {
+		addRecipe(name: String!, description: String!, category: String!,
+		 instructions: String!, username: String): Recipe
 	}
 `;
 
