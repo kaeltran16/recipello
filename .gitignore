@@ -65,4 +65,4 @@ typings/
 src/server/git rm -r --cached .
 dist
 src/server/node_modules
-src/server/src/config/keys_dev.js
+

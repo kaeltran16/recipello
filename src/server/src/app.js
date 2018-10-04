@@ -1,16 +1,17 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import expressGraphQL from 'express-graphql';
 
-import dbKey from './config/key';
+import env from 'dotenv';
+
+env.config({path: 'variables.env'});
 
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-mongoose.connect(dbKey.mongoURI, {useNewUrlParser: true})
-		.then(() => console.log('Database connected'));
-
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true})
+		.then(() => console.log('Database connected'))
+		.catch((err) => console.log(err));
 export default app;
