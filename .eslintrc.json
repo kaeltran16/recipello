@@ -1,0 +1,31 @@
+{
+  "plugins": [
+    "import",
+    "jest"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "google",
+    "eslint:recommended"
+  ],
+  "rules": {
+    "linebreak-style": "off",
+    "indent": [
+      "off"
+    ],
+    "no-tabs": "off",
+    "comma-dangle": "off",
+    "quotes": [
+      "error",
+      "single"
+    ]
+  }
+}
