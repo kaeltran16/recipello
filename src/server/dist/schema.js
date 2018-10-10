@@ -1,3 +1,8 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 const typeDefs = `
 	type Recipe {
 		id: ID
@@ -27,8 +32,6 @@ const typeDefs = `
 		getAllRecipes: [Recipe]
 		
 		getCurrentUser: User
-		
-		getRecipe(id: ID!): Recipe
 	}
 	
 	type Mutation {
@@ -42,4 +45,5 @@ const typeDefs = `
 
 `;
 
-export default typeDefs;
+exports.default = typeDefs;
+//# sourceMappingURL=schema.js.map

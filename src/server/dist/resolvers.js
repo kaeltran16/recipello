@@ -1,5 +1,17 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+
+var _bcryptjs = require('bcryptjs');
+
+var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const jwt = require('jsonwebtoken');
-import bcrypt from 'bcryptjs';
+
 
 const createToken = (user, secret, expiresIn) => {
    const { username, email } = user;
@@ -9,7 +21,7 @@ const createToken = (user, secret, expiresIn) => {
 const resolvers = {
    Query: {
       getAllRecipes: async (root, args, { RecipeModel }) => {
-         const allRecipes = await RecipeModel.find().sort({ createdDate: 'desc' });
+         const allRecipes = await RecipeModel.find();
          return allRecipes;
       },
 
@@ -17,20 +29,12 @@ const resolvers = {
          if (!currentUser) {
             return null;
          }
-         const user = await UserModel.findOne({ username: currentUser.username })
-           .populate({
-              path: 'favorites',
-              model: 'Recipe'
-           });
+         const user = await UserModel.find({ username: currentUser.username }).populate({
+            path: 'favorites',
+            model: 'Recipe'
+         });
 
          return user;
-
-
-      },
-
-      getRecipe: async (root, { id }, { RecipeModel }) => {
-         const recipe = await RecipeModel.findOne({ _id: id });
-         return recipe;
       }
    },
    Mutation: {
@@ -68,7 +72,7 @@ const resolvers = {
             throw new Error('User not found');
          }
 
-         const isValidPassword = await bcrypt.compare(password, user.password);
+         const isValidPassword = await _bcryptjs2.default.compare(password, user.password);
          if (!isValidPassword) {
             throw new Error('Invalid password');
          }
@@ -78,4 +82,5 @@ const resolvers = {
    }
 };
 
-export default resolvers;
+exports.default = resolvers;
+//# sourceMappingURL=resolvers.js.map

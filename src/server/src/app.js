@@ -1,34 +1,54 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import {ApolloServer} from 'apollo-server-express';
-import {makeExecutableSchema} from 'graphql-tools';
+import { ApolloServer } from 'apollo-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
 import typeDefs from './schema';
 import resolvers from './resolvers';
-import {UserModel} from './models/User';
-import {RecipeModel} from './models/Recipe';
+import { UserModel } from './models/User';
+import { RecipeModel } from './models/Recipe';
+import jwt from 'jsonwebtoken';
 
 const schema = makeExecutableSchema({
-		typeDefs,
-		resolvers
+   typeDefs,
+   resolvers
 });
 
 const app = express();
-
-const server = new ApolloServer({
-		schema,
-		context: {
-				UserModel,
-				RecipeModel
-		}
+app.use(async (req, res, next) => {
+   const token = req.headers['authorization'];
+   if (token !== 'null' && token !== undefined) {
+      try {
+         const currentUser = await jwt.verify(token, process.env.SECRET);
+         req.currentUser = currentUser;
+      } catch (err) {
+         console.error(err);
+      }
+   }
+   next();
 });
 
-app.use(bodyParser.urlencoded({extended: false}));
+
+const server = new ApolloServer({
+   schema,
+   context: ({ req }) => {
+      const { currentUser } = req;
+      return {
+         UserModel,
+         RecipeModel,
+         currentUser
+      };
+
+   }
+});
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true})
-		.then(() => console.log('Database connected'))
-		.catch((err) => console.log(err));
 
-server.applyMiddleware({app});
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .then(() => console.log('Database connected'))
+  .catch((err) => console.log(err));
+
+server.applyMiddleware({ app });
 export default app;
