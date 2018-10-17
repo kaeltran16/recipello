@@ -100,6 +100,11 @@ const resolvers = {
          }
 
          return { token: createToken(user, process.env.SECRET, '1hr') };
+      },
+
+      deleteUserRecipe: async (root, { id }, { RecipeModel }) => {
+         const recipe = await RecipeModel.findOneAndDelete({ _id: id });
+         return recipe;
       }
    }
 };

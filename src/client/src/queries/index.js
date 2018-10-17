@@ -91,3 +91,11 @@ export const GET_USER_RECIPES = gql`
         }
     }
 `;
+
+export const DELETE_USER_RECIPE = gql`
+    mutation($id: ID!) {
+        deleteUserRecipe(id: $id) {
+            id
+        }
+    }
+`;
