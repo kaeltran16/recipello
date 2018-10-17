@@ -50,6 +50,13 @@ const resolvers = {
             });
             return recipes;
          }
+      },
+
+      getUserRecipes: async (root, { username }, { RecipeModel }) => {
+         const userRecipes = await RecipeModel.find({ username }).sort({
+            createdDate: 'desc'
+         });
+         return userRecipes;
       }
    },
    Mutation: {

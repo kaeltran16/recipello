@@ -30,6 +30,7 @@ const typeDefs = `
 		
 		getRecipe(id: ID!): Recipe
 		searchRecipe(searchTerm: String): [Recipe]
+		getUserRecipes(username: String!): [Recipe]
 	}
 	
 	type Mutation {
