@@ -31,6 +31,25 @@ const resolvers = {
       getRecipe: async (root, { id }, { RecipeModel }) => {
          const recipe = await RecipeModel.findOne({ _id: id });
          return recipe;
+      },
+
+      searchRecipe: async (root, { searchTerm }, { RecipeModel }) => {
+         if (searchTerm) {
+            const searchResults = await RecipeModel.find({
+               $text: { $search: searchTerm }
+            }, {
+               score: { $meta: 'textScore' }
+            }).sort({
+               score: { $meta: 'textScore' }
+            });
+            return searchResults;
+         } else {
+            const recipes = RecipeModel.find().sort({
+               likes: 'desc',
+               createdDate: 'desc'
+            });
+            return recipes;
+         }
       }
    },
    Mutation: {

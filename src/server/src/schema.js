@@ -29,6 +29,7 @@ const typeDefs = `
 		getCurrentUser: User
 		
 		getRecipe(id: ID!): Recipe
+		searchRecipe(searchTerm: String): [Recipe]
 	}
 	
 	type Mutation {

@@ -53,6 +53,15 @@ export const GET_RECIPE = gql`
     }
 `;
 
+export const SEARCH_RECIPE = gql`
+    query($searchTerm: String) {
+        searchRecipe(searchTerm: $searchTerm) {
+            id
+            name
+            likes
+        }
+    }
+`;
 
 export const ADD_RECIPE = gql`
     mutation($name: String!, $description: String!, $category: String!, $instructions: String!, $username: String) {
