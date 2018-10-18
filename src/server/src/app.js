@@ -9,6 +9,8 @@ import { UserModel } from './models/User';
 import { RecipeModel } from './models/Recipe';
 import jwt from 'jsonwebtoken';
 
+const path = require('path');
+
 const schema = makeExecutableSchema({
    typeDefs,
    resolvers
@@ -49,6 +51,15 @@ app.use(bodyParser.json());
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => console.log('Database connected'))
   .catch((err) => console.log(err));
+
+if (process.env.NODE_ENV === 'production') {
+   app.use(express.static('client/build'));
+
+   app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+   });
+}
+
 
 server.applyMiddleware({ app });
 export default app;

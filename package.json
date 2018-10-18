@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm start --prefix src/server",
+    "heroku-postbuild": "npm install --prefix src/client && npm run build --prefix src/client && npm install --prefix src/server",
     "server:dev": "npm run dev --prefix src/server",
     "client:dev": "npm start --prefix src/client",
     "dev": "concurrently --kill-others-on-fail \"npm run server:dev\" \"npm run client:dev\""
@@ -16,6 +18,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Khang-Tran/recipello/issues"
+  },
+  "engines": {
+    "node": "v8.12.0"
   },
   "homepage": "https://github.com/Khang-Tran/recipello#readme",
   "devDependencies": {
