@@ -105,6 +105,16 @@ const resolvers = {
       deleteUserRecipe: async (root, { id }, { RecipeModel }) => {
          const recipe = await RecipeModel.findOneAndDelete({ _id: id });
          return recipe;
+      },
+      likeRecipe: async (root, { id, username }, { RecipeModel, UserModel }) => {
+         const recipe = await RecipeModel.findOneAndUpdate({ _id: id }, { $inc: { likes: 1 } });
+         const user = await UserModel.findOneAndUpdate({ username }, { $addToSet: { favorites: id } });
+         return recipe;
+      },
+      unlikeRecipe: async (root, { id, username }, { RecipeModel, UserModel }) => {
+         const recipe = await RecipeModel.findOneAndUpdate({ _id: id }, { $inc: { likes: -1 } });
+         const user = await UserModel.findOneAndUpdate({ username }, { $pull: { favorites: id } });
+         return recipe;
       }
    }
 };

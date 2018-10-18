@@ -42,6 +42,8 @@ const typeDefs = `
 		signinUser(username: String!, password: String!): Token
 		
 		deleteUserRecipe(id: ID!): Recipe
+		likeRecipe(id: ID!, username: String!): Recipe
+		unlikeRecipe(id: ID!, username: String!): Recipe
 	}
 
 `;
