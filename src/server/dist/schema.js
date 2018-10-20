@@ -1,12 +1,13 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
+Object.defineProperty(exports, '__esModule', {
+   value: true
 });
 const typeDefs = `
 	type Recipe {
 		id: ID
 		name: String!
+		imgUrl: String!
 		category: String!
 		description: String!
 		instructions: String!
@@ -35,12 +36,14 @@ const typeDefs = `
 	}
 	
 	type Mutation {
-		addRecipe(name: String!, description: String!, category: String!,
+		addRecipe(name: String!, imgUrl: String!, description: String!, category: String!,
 		 instructions: String!, username: String): Recipe
 		 
 		signupUser(username: String!, email: String!, password: String!): Token
 		
 		signinUser(username: String!, password: String!): Token
+		updateUserRecipe(id: ID!, name: String!, imgUrl: String!, description: String!, category: String!,
+		 instructions: String!): Recipe
 	}
 
 `;

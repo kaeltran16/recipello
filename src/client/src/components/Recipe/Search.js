@@ -19,7 +19,7 @@ class Search extends React.Component {
            {client => {
               return (
                 <div className='App'>
-                   <input type="search"
+                   <input className='search' type="search"
                           placeholder='Search for recipes'
                           onChange={async event => {
                              event.persist();

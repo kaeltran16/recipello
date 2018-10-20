@@ -2,6 +2,7 @@ const typeDefs = `
 	type Recipe {
 		id: ID
 		name: String!
+		imgUrl: String!
 		category: String!
 		description: String!
 		instructions: String!
@@ -34,7 +35,7 @@ const typeDefs = `
 	}
 	
 	type Mutation {
-		addRecipe(name: String!, description: String!, category: String!,
+		addRecipe(name: String!, imgUrl: String!, description: String!, category: String!,
 		 instructions: String!, username: String): Recipe
 		 
 		signupUser(username: String!, email: String!, password: String!): Token
@@ -44,6 +45,8 @@ const typeDefs = `
 		deleteUserRecipe(id: ID!): Recipe
 		likeRecipe(id: ID!, username: String!): Recipe
 		unlikeRecipe(id: ID!, username: String!): Recipe
+		updateUserRecipe(id: ID!, name: String!, imgUrl: String!, description: String!, category: String!,
+		 instructions: String!): Recipe
 	}
 
 `;

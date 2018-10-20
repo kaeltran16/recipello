@@ -21,7 +21,7 @@ import Profile from './components/Profile/Profile';
 import RecipePage from './components/Recipe/RecipePage';
 
 const client = new ApolloClient({
-   uri: 'http://recipello.herokuapp.com/graphql',
+   uri: 'https://recipello.herokuapp.com/graphql',
    fetchOptions: {
       credentials: 'include'
    },

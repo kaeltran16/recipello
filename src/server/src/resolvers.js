@@ -61,10 +61,11 @@ const resolvers = {
    },
    Mutation: {
       addRecipe: async (root, args, context) => {
-         const { name, description, category, instructions, username } = args;
+         const { name, imgUrl, description, category, instructions, username } = args;
          const { RecipeModel } = context;
          const newRecipe = await new RecipeModel({
             name,
+            imgUrl,
             description,
             category,
             instructions,
@@ -115,6 +116,18 @@ const resolvers = {
          const recipe = await RecipeModel.findOneAndUpdate({ _id: id }, { $inc: { likes: -1 } });
          const user = await UserModel.findOneAndUpdate({ username }, { $pull: { favorites: id } });
          return recipe;
+      },
+      updateUserRecipe: async (root, args, context) => {
+         const { id, name, imgUrl, description, category, instructions } = args;
+         const { RecipeModel } = context;
+         const updatedRecipe = await RecipeModel.findOneAndUpdate(
+           { _id: id },
+           { $set: { name, imgUrl, description, category, instructions } },
+           { new: true }
+         );
+         console.log(updatedRecipe);
+
+         return updatedRecipe;
       }
    }
 };

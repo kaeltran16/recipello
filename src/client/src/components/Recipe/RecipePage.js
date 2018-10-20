@@ -3,22 +3,46 @@ import { Query } from 'react-apollo';
 import { GET_RECIPE } from '../../queries';
 import { withRouter } from 'react-router-dom';
 import LikeRecipe from './LikeRecipe';
+import Spinner from '../Spinner';
 
 const RecipePage = ({ match }) => {
    const { id } = match.params;
    return (
      <Query query={GET_RECIPE} variables={{ id }}>
         {({ data, loading, error }) => {
-           if (loading) return <div>Loading..</div>;
+           if (loading) return <Spinner/>;
            if (error) return <div>Error</div>;
            return (
              <div className='App'>
-                <h2>Category: {data.getRecipe.name}</h2>
-                <p>Description: {data.getRecipe.description}</p>
-                <p>Instructions: {data.getRecipe.instructions}</p>
-                <p>Likes: {data.getRecipe.likes}</p>
-                <p>Created By: {data.getRecipe.username}</p>
-                <LikeRecipe id={data.getRecipe.id}/>
+                <div
+                  style={{ background: `url(${data.getRecipe.imgUrl}) center center / cover no-repeat` }}
+                  className='recipe-image'>
+                </div>
+                <div className='recipe'>
+                   <div className="recipe-header">
+                      <h2 className="recipe-name">
+                         <strong>{data.getRecipe.name}</strong>
+                      </h2>
+                      <h5>
+                         <strong>{data.getRecipe.category}</strong>
+                      </h5>
+                      <p>Created by <strong>{data.getRecipe.username}</strong>
+                      </p>
+                      <p>{data.getRecipe.likes}<span role='img'
+                                                     aria-label='heart'>❤</span>
+                      </p>
+                   </div>
+                   <blockquote className='recipe-description'>
+                      {data.getRecipe.description}
+                   </blockquote>
+                   <h3 className='recipe-instructions__title'>
+                      Instructions
+                   </h3>
+                   <div className='recipe-instructions'
+                        dangerouslySetInnerHTML={{ __html: data.getRecipe.instructions }}>
+                   </div>
+                   <LikeRecipe id={id}/>
+                </div>
              </div>
            );
         }}

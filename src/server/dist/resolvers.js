@@ -1,6 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
    value: true
 });
 
@@ -8,7 +8,9 @@ var _bcryptjs = require('bcryptjs');
 
 var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+   return obj && obj.__esModule ? obj : { default: obj };
+}
 
 const jwt = require('jsonwebtoken');
 
@@ -39,10 +41,11 @@ const resolvers = {
    },
    Mutation: {
       addRecipe: async (root, args, context) => {
-         const { name, description, category, instructions, username } = args;
+         const { name, imgUrl, description, category, instructions, username } = args;
          const { RecipeModel } = context;
          const newRecipe = await new RecipeModel({
             name,
+            imgUrl,
             description,
             category,
             instructions,
@@ -78,6 +81,18 @@ const resolvers = {
          }
 
          return { token: createToken(user, process.env.SECRET, '1hr') };
+      },
+
+      updateUserRecipe: async (root, args, context) => {
+         const { id, name, imgUrl, description, category, instructions } = args;
+         const { RecipeModel } = context;
+         const updatedRecipe = await RecipeModel.findOneAndUpdate(
+           { id },
+           { $set: { name, imgUrl, description, category, instructions } },
+           { new: true }
+         );
+
+         return updatedRecipe;
       }
    }
 };
